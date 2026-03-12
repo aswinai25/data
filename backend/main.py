@@ -9,6 +9,7 @@ from datetime import datetime
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment
 import os
+import re
 
 from database import engine, SessionLocal, Base
 from models import SalesRecord
@@ -31,16 +32,16 @@ allowed_origins = [
     "http://localhost:8000",
 ]
 
-# Add production frontend URL if available
-frontend_url = os.getenv("FRONTEND_URL", "").strip()
+# Add production frontend URL
+frontend_url = os.getenv("FRONTEND_URL", "").strip().rstrip("/")
 if frontend_url:
     allowed_origins.append(frontend_url)
-else:
-    # Fallback for development
-    allowed_origins.extend([
-        "https://*.vercel.app",
-        "https://*.render.com",
-    ])
+    print(f"📍 CORS configured for: {frontend_url}")
+
+# Allow all Vercel deployments as fallback
+allowed_origins.append("https://sales-analytics-rouge.vercel.app")
+
+print(f"✅ CORS allowed origins: {allowed_origins}")
 
 app.add_middleware(
     CORSMiddleware,
