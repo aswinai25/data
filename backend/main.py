@@ -29,12 +29,18 @@ allowed_origins = [
     "http://localhost:3000",
     "http://localhost:5173",
     "http://localhost:8000",
-    "https://*.vercel.app",  # Vercel deployment
-    "https://*.render.com",   # Render deployment
 ]
 
-if os.getenv("ENVIRONMENT") == "production":
-    allowed_origins.append(os.getenv("FRONTEND_URL", "https://yourfrontend.vercel.app"))
+# Add production frontend URL if available
+frontend_url = os.getenv("FRONTEND_URL", "").strip()
+if frontend_url:
+    allowed_origins.append(frontend_url)
+else:
+    # Fallback for development
+    allowed_origins.extend([
+        "https://*.vercel.app",
+        "https://*.render.com",
+    ])
 
 app.add_middleware(
     CORSMiddleware,
