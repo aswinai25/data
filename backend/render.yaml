@@ -9,9 +9,5 @@ services:
     envVars:
       - key: ENVIRONMENT
         value: production
-      - key: DATABASE_URL
-        scope: shared
-
-  - type: postgres
-    name: sales-analytics-db
-    plan: free
+      - key: DEBUG
+        value: false
