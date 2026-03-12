@@ -1,0 +1,17 @@
+{
+  "name": "sales-analytics-app",
+  "version": "1.0.0",
+  "description": "Sales Analytics Application - Full Stack",
+  "scripts": {
+    "dev": "npm run dev --prefix frontend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "cd backend && python main.py",
+    "build": "npm run build --prefix frontend",
+    "install:all": "npm install && npm install --prefix frontend && pip install -r backend/requirements.txt",
+    "start:frontend": "npm run start --prefix frontend",
+    "preview": "npm run preview --prefix frontend"
+  },
+  "keywords": ["sales", "analytics", "dashboard"],
+  "author": "",
+  "license": "MIT"
+}
