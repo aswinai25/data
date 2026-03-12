@@ -9,7 +9,6 @@ from datetime import datetime
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment
 import os
-import re
 
 from database import engine, SessionLocal, Base
 from models import SalesRecord
@@ -25,28 +24,12 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS configuration for React frontend
-allowed_origins = [
-    "http://localhost:3000",
-    "http://localhost:5173",
-    "http://localhost:8000",
-]
-
-# Add production frontend URL
-frontend_url = os.getenv("FRONTEND_URL", "").strip().rstrip("/")
-if frontend_url:
-    allowed_origins.append(frontend_url)
-    print(f"📍 CORS configured for: {frontend_url}")
-
-# Allow all Vercel deployments as fallback
-allowed_origins.append("https://sales-analytics-rouge.vercel.app")
-
-print(f"✅ CORS allowed origins: {allowed_origins}")
-
+# CORS configuration - Allow all origins for now
+# This will be restricted to specific domains in production
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
-    allow_credentials=True,
+    allow_origins=["*"],  # Allow all origins
+    allow_credentials=False,  # Must be False when using allow_origins=["*"]
     allow_methods=["*"],
     allow_headers=["*"],
 )
